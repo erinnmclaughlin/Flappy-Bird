@@ -1,8 +1,8 @@
-<img src="https://github.com/thecodebug/Flappy-Bird/blob/PartOne/Screenshots/GameScreenshot.png" width="100%" />
-
 # Building Flappy Bird with Blazor
 
 A Blazor WebAssembly implementation of Flappy Bird!
+
+<img src="https://github.com/thecodebug/Flappy-Bird/blob/PartOne/Screenshots/GameScreenshot.png" width="100%" />
 
 ### About
 
