@@ -2,7 +2,11 @@
 
 A Blazor WebAssembly implementation of Flappy Bird!
 
+<img src="https://github.com/thecodebug/Flappy-Bird/blob/PartOne/Screenshots/GameScreenshot.png" width="100%" />
+
 ![Flappy Bird Screenshot](Screenshots/GameScreenshot.png)
+
+### About
 
 This project contains the code associated with my tutorial series, which exists both in written format on [my website](https://erinnmclaughlin.com) and in video format on [my Youtube channel](https://www.youtube.com/channel/UCy4M_NlMdP7a2TK2PNQioXQ).
 
