@@ -1,1 +1,47 @@
-﻿
+﻿.game-container {
+    width: 500px;
+    height: 730px;
+    position: absolute;
+}
+
+.sky {
+    background-color: lightblue;
+    width: 500px;
+    height: 580px;
+    position: absolute;
+}
+
+.ground {
+    background-color: forestgreen;
+    width: 500px;
+    height: 150px;
+    position: absolute;
+    top: 580px;
+}
+
+.bird {
+    background-color: yellow;
+    width: 60px;
+    height: 45px;
+    left: 220px;
+    position: absolute;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}

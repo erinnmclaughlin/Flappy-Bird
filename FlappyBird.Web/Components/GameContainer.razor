@@ -1,0 +1,32 @@
+﻿@using FlappyBird.Web.Models
+
+@if (_gameManager == null)
+{
+    <em>Loading...</em>
+}
+else
+{
+    <div class="game-container" @onclick="StartGame">
+        <div class="sky">
+            <div class="bird" style="@($"bottom: {_gameManager.Bird.DistanceFromBottom}px")"></div>
+        </div>
+        <div class="ground"></div>
+    </div>
+}
+
+
+@code {
+
+    GameManager _gameManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _gameManager = new GameManager();
+        _gameManager.PropertyChanged += (o, e) => StateHasChanged();
+    }
+
+    void StartGame()
+    {
+        _gameManager.MainLoop();
+    }
+}
