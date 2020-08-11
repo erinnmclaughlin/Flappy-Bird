@@ -1,8 +1,8 @@
 # Building Flappy Bird with Blazor
 
-![Flappy Bird Screenshot](Screenshots/GameScreenshot.png)
-
 A Blazor WebAssembly implementation of Flappy Bird!
+
+![Flappy Bird Screenshot](Screenshots/GameScreenshot.png)
 
 This project contains the code associated with my tutorial series, which exists both in written format on [my website](https://erinnmclaughlin.com) and in video format on [my Youtube channel](https://www.youtube.com/channel/UCy4M_NlMdP7a2TK2PNQioXQ).
 
