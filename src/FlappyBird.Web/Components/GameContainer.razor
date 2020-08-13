@@ -6,7 +6,7 @@
 }
 else
 {
-    <div class="game-container" @onclick="StartGame">
+    <div class="game-container" tabindex="0" @onclick="StartGame" @onkeyup="HandleKeyUp">
         <div class="sky">
             <div class="bird" style="@_birdCss"></div>
         </div>
@@ -29,5 +29,10 @@ else
     void StartGame()
     {
         _gameManager.MainLoop();
+    }
+
+    void HandleKeyUp()
+    {
+        _gameManager.Bird.Jump();
     }
 }
