@@ -27,6 +27,13 @@
     position: absolute;
 }
 
+.pipe {
+    background-color: black;
+    width: 60px;
+    height: 300px;
+    position: absolute;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

@@ -12,10 +12,12 @@ namespace FlappyBird.Web.Models
         public event PropertyChangedEventHandler PropertyChanged;
 
         public BirdModel Bird { get; private set; }
+        public PipeModel Pipe { get; private set; }
 
         public GameManager()
         {
             Bird = new BirdModel();
+            Pipe = new PipeModel();
         }
 
         public async void MainLoop()

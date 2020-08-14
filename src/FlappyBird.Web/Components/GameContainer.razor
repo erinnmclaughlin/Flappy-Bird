@@ -11,6 +11,9 @@ else
             <div class="bird" style="@_birdCss"></div>
         </div>
         <div class="ground"></div>
+
+        <div class="pipe" style="@_pipeCss"></div>
+
     </div>
 }
 
@@ -19,6 +22,7 @@ else
 
     GameManager _gameManager { get; set; }
     string _birdCss => $"bottom: {_gameManager.Bird.DistanceFromBottom}px";
+    string _pipeCss => $"bottom: {_gameManager.Pipe.DistanceFromBottom}px; left: {_gameManager.Pipe.DistanceFromLeft}px";
 
     protected override void OnInitialized()
     {
