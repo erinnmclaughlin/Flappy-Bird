@@ -5,13 +5,17 @@ namespace FlappyBird.Web.Models
 {
     public class PipeModel : INotifyPropertyChanged
     {
-        public int DistanceFromBottom { get; private set; }
-        public int DistanceFromLeft { get; private set; }
+        private int _distanceFromLeft = 500;
 
-        public PipeModel()
+        public int DistanceFromBottom { get; private set; } = new Random().Next(1, 60);
+        public int DistanceFromLeft
         {
-            DistanceFromBottom = new Random().Next(1, 60);
-            DistanceFromLeft = 500;
+            get { return _distanceFromLeft; }
+            set
+            {
+                _distanceFromLeft = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DistanceFromLeft)));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -19,7 +23,6 @@ namespace FlappyBird.Web.Models
         public void Move(int speed)
         {
             DistanceFromLeft -= speed;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DistanceFromLeft)));
         }
     }
 }
