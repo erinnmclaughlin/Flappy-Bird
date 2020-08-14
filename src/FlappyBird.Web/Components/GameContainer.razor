@@ -8,26 +8,22 @@ else
 {
     <div class="game-container" tabindex="0" @onclick="StartGame" @onkeyup="HandleKeyUp">
         <div class="sky">
-            <div class="bird" style="@_birdCss"></div>
+            <Bird Model="_gameManager.Bird" />
         </div>
         <div class="ground"></div>
 
-        <div class="pipe" style="@_pipeCss"></div>
+        <Pipe Model="_gameManager.Pipe" />
 
     </div>
 }
 
-
 @code {
 
     GameManager _gameManager { get; set; }
-    string _birdCss => $"bottom: {_gameManager.Bird.DistanceFromBottom}px";
-    string _pipeCss => $"bottom: {_gameManager.Pipe.DistanceFromBottom}px; left: {_gameManager.Pipe.DistanceFromLeft}px";
 
     protected override void OnInitialized()
     {
         _gameManager = new GameManager();
-        _gameManager.PropertyChanged += (o, e) => StateHasChanged();
     }
 
     void StartGame()
@@ -37,6 +33,9 @@ else
 
     void HandleKeyUp()
     {
-        _gameManager.Bird.Jump();
+        if (_gameManager.IsRunning)
+        {
+            _gameManager.Bird.Jump();
+        }
     }
 }

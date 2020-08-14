@@ -1,0 +1,14 @@
+﻿@using FlappyBird.Web.Models
+
+<div class="pipe" style="@_pipeCss"></div>
+
+@code {
+
+    [Parameter] public PipeModel Model { get; set; }
+    string _pipeCss => $"bottom: {Model.DistanceFromBottom}px; left: {Model.DistanceFromLeft}px";
+
+    protected override void OnParametersSet()
+    {
+        Model.PropertyChanged += (o, e) => StateHasChanged();
+    }
+}

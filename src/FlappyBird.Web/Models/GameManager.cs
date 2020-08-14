@@ -3,13 +3,12 @@ using System.Threading.Tasks;
 
 namespace FlappyBird.Web.Models
 {
-    public class GameManager : INotifyPropertyChanged
+    public class GameManager
     {
         private readonly int _gravity = 2;
+        private readonly int _speed = 2;
 
         public bool IsRunning { get; private set; } = false;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public BirdModel Bird { get; private set; }
         public PipeModel Pipe { get; private set; }
@@ -27,7 +26,7 @@ namespace FlappyBird.Web.Models
             while(IsRunning)
             {
                 Bird.Fall(_gravity);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Bird)));
+                Pipe.Move(_speed);
 
                 if (Bird.DistanceFromBottom <= 0)
                     GameOver();
