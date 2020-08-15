@@ -36,9 +36,9 @@ else
         _gameManager.MainLoop();
     }
 
-    void HandleKeyUp()
+    void HandleKeyUp(KeyboardEventArgs e)
     {
-        if (_gameManager.IsRunning)
+        if (_gameManager.IsRunning && e.Key == " ")
         {
             _gameManager.Bird.Jump();
         }
