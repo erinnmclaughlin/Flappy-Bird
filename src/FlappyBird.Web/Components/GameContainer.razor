@@ -6,7 +6,9 @@
 }
 else
 {
+    <div class="border-left"></div>
     <div class="game-container" tabindex="0" @onclick="StartGame" @onkeyup="HandleKeyUp">
+        <div class="border-top"></div>
         <div class="sky">
             <Bird Model="_gameManager.Bird" />
         </div>
@@ -17,6 +19,7 @@ else
              <Pipe Model="pipe" />
         }
     </div>
+    <div class="border-right"></div>
 }
 
 @code {
