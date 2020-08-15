@@ -42,6 +42,17 @@ namespace FlappyBird.Web.Models
         {
             if (Bird.DistanceFromBottom <= 0)
                 GameOver();
+
+            var centeredPipe = Pipes.SingleOrDefault(p => p.DistanceFromLeft > 200 && p.DistanceFromLeft < 280);
+            if (centeredPipe != null)
+            {
+                // pipe height - ground height + pipe distance from game bottom
+                var pipeDistanceFromGround = 300 - 150 + centeredPipe.DistanceFromBottom;
+
+                // +1 to avoid overlap
+                if (Bird.DistanceFromBottom <= pipeDistanceFromGround + 1)
+                    GameOver();
+            }
         }
 
         private void ManagePipes()
