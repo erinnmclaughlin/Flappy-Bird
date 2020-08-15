@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace FlappyBird.Web.Models
             while(IsRunning)
             {
                 MoveGameObjects();
-                CheckForCollisions();
+                CheckForCollisions();            
                 ManagePipes();
 
                 await Task.Delay(20);
@@ -40,19 +41,19 @@ namespace FlappyBird.Web.Models
 
         private void CheckForCollisions()
         {
-            if (Bird.DistanceFromBottom <= 0)
+            if (Bird.DistanceFromGround <= 0)
                 GameOver();
 
-            var centeredPipe = Pipes.SingleOrDefault(p => p.DistanceFromLeft > 200 && p.DistanceFromLeft < 280);
+            var centeredPipe = GetCenteredPipe();
             if (centeredPipe != null)
             {
-                // pipe height - ground height + pipe distance from game bottom
-                var pipeDistanceFromGround = 300 - 150 + centeredPipe.DistanceFromBottom;
+                var birdHitLowerPipe = Bird.DistanceFromGround <= centeredPipe.BottomDistanceFromGround + 1;
+                var birdHitUpperPipe = Bird.DistanceFromGround >= centeredPipe.TopDistanceFromGround - 45;
 
-                // +1 to avoid overlap
-                if (Bird.DistanceFromBottom <= pipeDistanceFromGround + 1)
-                    GameOver();
+                if (birdHitLowerPipe || birdHitUpperPipe)
+                    GameOver();                
             }
+                
         }
 
         private void ManagePipes()
@@ -81,6 +82,11 @@ namespace FlappyBird.Web.Models
         private void GeneratePipe()
         {
             Pipes.Add(new PipeModel());
+        }
+
+        private PipeModel GetCenteredPipe()
+        {
+            return Pipes.FirstOrDefault(p => p.IsCentered());
         }
 
     }

@@ -1,11 +1,13 @@
 ﻿@using FlappyBird.Web.Models
 
-<div class="pipe" style="@_pipeCss"></div>
+<div class="pipe" style="@_topPipeCss"></div>
+<div class="pipe" style="@_bottomPipeCss"></div>
 
 @code {
 
     [Parameter] public PipeModel Model { get; set; }
-    string _pipeCss => $"bottom: {Model.DistanceFromBottom}px; left: {Model.DistanceFromLeft}px";
+    string _topPipeCss => $"bottom: {Model.DistanceFromBottom + 430}px; left: {Model.DistanceFromLeft}px";
+    string _bottomPipeCss => $"bottom: {Model.DistanceFromBottom}px; left: {Model.DistanceFromLeft}px";
 
     protected override void OnParametersSet()
     {

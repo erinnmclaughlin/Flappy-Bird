@@ -4,15 +4,15 @@ namespace FlappyBird.Web.Models
 {
     public class BirdModel : INotifyPropertyChanged
     {
-        public int _distanceFromBottom = 100;
+        public int _distanceFromGround = 100;
 
-        public int DistanceFromBottom
+        public int DistanceFromGround
         {
-            get { return _distanceFromBottom; }
+            get { return _distanceFromGround; }
             set
             {
-                _distanceFromBottom = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DistanceFromBottom)));
+                _distanceFromGround = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DistanceFromGround)));
             }
         }
         public int JumpStrength { get; private set; } = 50;
@@ -21,13 +21,13 @@ namespace FlappyBird.Web.Models
 
         public void Fall(int gravity)
         {
-            DistanceFromBottom -= gravity;
+            DistanceFromGround -= gravity;
         }
 
         public void Jump()
         {
-            if (DistanceFromBottom < 530)
-                DistanceFromBottom += JumpStrength;
+            if (DistanceFromGround < 530)
+                DistanceFromGround += JumpStrength;
         }
     }
 }
