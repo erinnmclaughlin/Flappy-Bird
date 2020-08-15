@@ -6,7 +6,7 @@
 
     [Parameter] public BirdModel Model { get; set; }
 
-    string _birdCss => $"bottom: {Model.DistanceFromBottom}px";
+    string _birdCss => $"bottom: {Model.DistanceFromGround}px";
 
     protected override void OnParametersSet()
     {

@@ -6,22 +6,23 @@
 }
 
 .sky {
-    background-color: lightblue;
+    background-image: url(../images/fb-game-background.png);
     width: 500px;
     height: 580px;
     position: absolute;
 }
 
 .ground {
-    background-color: forestgreen;
+    background-image: url(../images/bottom-background.png);
     width: 500px;
     height: 150px;
     position: absolute;
     top: 580px;
+    z-index: +1;
 }
 
 .bird {
-    background-color: yellow;
+    background-image: url(../images/flappy-bird.png);
     width: 60px;
     height: 45px;
     left: 220px;
@@ -29,11 +30,15 @@
 }
 
 .pipe {
-    background-color: black;
+    background-image: url(../images/flappybird-pipe.png);
     width: 60px;
     height: 300px;
     position: absolute;
 }
+
+    .pipe.top {
+        transform: rotate(180deg);
+    }
 
 #blazor-error-ui {
     background: lightyellow;
