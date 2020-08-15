@@ -30,23 +30,41 @@ namespace FlappyBird.Web.Models
 
             while(IsRunning)
             {
-                Bird.Fall(_gravity);
-                foreach (var pipe in Pipes)
-                {
-                    pipe.Move(_speed);
-                }
-
-                if (Bird.DistanceFromBottom <= 0)
-                    GameOver();
-
-                if (!Pipes.Any() || Pipes.Last().DistanceFromLeft < 250)
-                    GeneratePipe();
-
-                if (Pipes.First().DistanceFromLeft < -60)
-                    Pipes.Remove(Pipes.First());
+                MoveGameObjects();
+                CheckForCollisions();
+                ManagePipes();
 
                 await Task.Delay(20);
             }
+        }
+
+        private void CheckForCollisions()
+        {
+            if (Bird.DistanceFromBottom <= 0)
+                GameOver();
+        }
+
+        private void ManagePipes()
+        {
+            if (!Pipes.Any() || Pipes.Last().DistanceFromLeft < 250)
+                GeneratePipe();
+
+            if (Pipes.First().DistanceFromLeft < -60)
+                Pipes.Remove(Pipes.First());
+        }
+
+        private void MoveGameObjects()
+        {
+            Bird.Fall(_gravity);
+            foreach (var pipe in Pipes)
+            {
+                pipe.Move(_speed);
+            }
+        }
+       
+        private void GameOver()
+        {
+            IsRunning = false;
         }
 
         private void GeneratePipe()
@@ -54,9 +72,5 @@ namespace FlappyBird.Web.Models
             Pipes.Add(new PipeModel());
         }
 
-        private void GameOver()
-        {
-            IsRunning = false;
-        }
     }
 }
