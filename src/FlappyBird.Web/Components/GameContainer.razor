@@ -12,7 +12,11 @@ else
         </div>
         <div class="ground"></div>
 
-        <Pipe Model="_gameManager.Pipe" />
+        @foreach (var pipe in _gameManager.Pipes)
+        {
+             <Pipe Model="pipe" />
+        }
+       
 
     </div>
 }
@@ -24,6 +28,7 @@ else
     protected override void OnInitialized()
     {
         _gameManager = new GameManager();
+        _gameManager.PropertyChanged += (o,e) => StateHasChanged();
     }
 
     void StartGame()
