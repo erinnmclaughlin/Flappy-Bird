@@ -41,17 +41,19 @@ namespace FlappyBird.Web.Models
 
         private void CheckForCollisions()
         {
-            if (Bird.DistanceFromGround <= 0)
+            if (Bird.DistanceFromBottom <= 0)
                 GameOver();
 
             var centeredPipe = GetCenteredPipe();
             if (centeredPipe != null)
             {
-                var birdHitLowerPipe = Bird.DistanceFromGround <= centeredPipe.BottomDistanceFromGround + 1;
-                var birdHitUpperPipe = Bird.DistanceFromGround >= centeredPipe.TopDistanceFromGround - 45;
+                // pipe height - ground height + pipe distance from bottom
+                var min = 300 - 150 + centeredPipe.DistanceFromBottom;
+                // pipe gap - ground height + pipe distance from bottom - height of bird
+                var max = 430 - 150 + centeredPipe.DistanceFromBottom - 45;
 
-                if (birdHitLowerPipe || birdHitUpperPipe)
-                    GameOver();                
+                if (Bird.DistanceFromBottom < min || Bird.DistanceFromBottom > max)
+                    GameOver();
             }
                 
         }
