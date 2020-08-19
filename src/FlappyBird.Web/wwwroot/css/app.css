@@ -15,22 +15,28 @@
 .sky {
     background-image: url(../images/fb-game-background.png);
     position: absolute;
+    background-size: 100%;
 }
 
 .ground {
     background-image: url(../images/bottom-background.png);
     position: absolute;
     z-index: +1;
+    background-size: 100%;
 }
 
 .bird {
     background-image: url(../images/flappy-bird.png);
     position: absolute;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .pipe {
     background-image: url(../images/flappybird-pipe.png);
     position: absolute;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
     .pipe.top {
