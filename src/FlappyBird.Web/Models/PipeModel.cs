@@ -5,31 +5,44 @@ namespace FlappyBird.Web.Models
 {
     public class PipeModel : INotifyPropertyChanged
     {
-        private int _distanceFromLeft = 500;
+        private readonly int _groundHeight;
 
-        public int DistanceFromBottom { get; private set; } = new Random().Next(1, 60);
+        private readonly int _width;
+        public int Width { get { return _width; } }
 
+        private readonly int _height;
+        public int Height { get { return _height; } }
+
+        private readonly int _distanceFromBottom;
+        public int DistanceFromBottom { get { return _distanceFromBottom; } }
+        public int DistanceFromGround { get { return _height + DistanceFromBottom - _groundHeight; } }
+
+        private readonly int _gap;
+        public int Gap { get { return _gap; } }
+
+        private int _distanceFromLeft;
         public int DistanceFromLeft
         {
             get { return _distanceFromLeft; }
-            set
+            private set
             {
                 _distanceFromLeft = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DistanceFromLeft)));
             }
-        }
-
-        public int DistanceFromGround
-        {
-            // DistanceFromBottom - Height of Ground
-            get { return DistanceFromBottom - 150; }
-        }
-
-        public int Gap { get; private set; } = 130;
-        public int GapDistanceFromGroundMin { get { return DistanceFromBottom + 300 - 150; } }
-        public int GapDistanceFromGroundMax { get { return GapDistanceFromGroundMin + Gap; } }
+        }        
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public PipeModel(int gameWidth, int groundHeight)
+        {
+            _groundHeight = groundHeight;
+            _distanceFromLeft = gameWidth;
+            _distanceFromBottom = new Random().Next(1, 60);
+            _gap = gameWidth * 13 / 50;
+
+            _width = gameWidth * 3 / 25;
+            _height = gameWidth * 3 / 5;
+        }
 
         public void Move(int speed)
         {

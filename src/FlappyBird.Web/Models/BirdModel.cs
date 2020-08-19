@@ -5,6 +5,12 @@ namespace FlappyBird.Web.Models
 {
     public class BirdModel : INotifyPropertyChanged
     {
+        private readonly int _height;
+        public int Height { get { return _height; } }
+        private readonly int _width;
+        public int Width { get { return _width; } }
+        private readonly int _distanceFromLeft;
+        public int DistanceFromLeft { get { return _distanceFromLeft; } }
         private int _distanceFromGround = 100;
         public int DistanceFromGround
         {
@@ -15,10 +21,22 @@ namespace FlappyBird.Web.Models
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DistanceFromGround)));
             }
         }
-
-        public int JumpStrength { get; private set; } = 50;
+        private int _jumpStrength = 50;
+        public int JumpStrength
+        {
+            // TODO: Add limitations to min/max value (i.e., jump strength cant be negative or more than X percent of game height_
+            get { return _jumpStrength; }
+            set { _jumpStrength = value; }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public BirdModel(int gameWidth)
+        {
+            _width = gameWidth * 3 / 25;
+            _height = _width * 3 / 4;
+            _distanceFromLeft = (gameWidth - _width) / 2;
+        }
 
         public void Fall(int gravity)
         {

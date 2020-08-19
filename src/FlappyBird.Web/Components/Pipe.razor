@@ -6,11 +6,20 @@
 @code {
 
     [Parameter] public PipeModel Model { get; set; }
-    string _topPipeCss => $"bottom: {Model.DistanceFromBottom + Model.Gap + 300}px; left: {Model.DistanceFromLeft}px";
-    string _bottomPipeCss => $"bottom: {Model.DistanceFromBottom}px; left: {Model.DistanceFromLeft}px";
+
+    string _pipeCss;
+    string _topPipeCss;
+    string _bottomPipeCss;
 
     protected override void OnParametersSet()
     {
         Model.PropertyChanged += (o, e) => StateHasChanged();
+        _pipeCss = $"height: {Model.Height}px; width: {Model.Width}px; ";
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        _topPipeCss = $"{_pipeCss} left: {Model.DistanceFromLeft}px; bottom: {Model.DistanceFromBottom + Model.Gap + Model.Height}px;";
+        _bottomPipeCss = $"{_pipeCss} left: {Model.DistanceFromLeft}px; bottom: {Model.DistanceFromBottom}px;";
     }
 }

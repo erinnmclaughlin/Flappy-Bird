@@ -6,30 +6,36 @@
 }
 else
 {
-    <div class="border-left"></div>
-    <div class="game-container" tabindex="0" @onclick="_gameManager.StartGame" @onkeyup="HandleKeyUp">
-        <div class="border-top"></div>
-        <div class="sky">
+    <div class="border" style="@_leftBorderCss"></div>
+    <div class="game-container" style="@_gameCss" tabindex="0" @onclick="_gameManager.StartGame" @onkeyup="HandleKeyUp">
+        <div class="border" style="@_topBorderCss"></div>
+        <Sky Height="_gameManager.SkyHeight" Width="_gameManager.Width">
             <Bird Model="_gameManager.Bird" />
-        </div>
-        <div class="ground"></div>
+        </Sky>
+        <Ground Height="_gameManager.GroundHeight" Width="_gameManager.Width" Top="_gameManager.SkyHeight"/>
 
         @foreach (var pipe in _gameManager.Pipes)
         {
              <Pipe Model="pipe" />
         }
     </div>
-    <div class="border-right"></div>
+    <div class="border" style="@_rightBorderCss"></div>
 }
 
 @code {
 
     GameManager _gameManager { get; set; }
+    string _gameCss;
+    string _leftBorderCss;
+    string _rightBorderCss;
+    string _topBorderCss;
+
 
     protected override void OnInitialized()
     {
         _gameManager = new GameManager();
         _gameManager.PropertyChanged += (o,e) => StateHasChanged();
+        SetStyling();
     }
 
     void HandleKeyUp(KeyboardEventArgs e)
@@ -38,5 +44,13 @@ else
         {
             _gameManager.Bird.Jump();
         }
+    }
+
+    void SetStyling()
+    {
+        _gameCss = $"width: {_gameManager.Width}px; height: {_gameManager.Height}px; left: {_gameManager.Border}px;";
+        _leftBorderCss = $"width: {_gameManager.Border}px; height: {_gameManager.Height + _gameManager.Border}px;";
+        _rightBorderCss = $"width: {_gameManager.Border}px; height: {_gameManager.Height + _gameManager.Border}px; left: {_gameManager.Width + _gameManager.Border}px;";
+        _topBorderCss = $"width: {_gameManager.Width + 2 * _gameManager.Border}px; height: {_gameManager.Border}px; top: {-_gameManager.Border}px; left: {-_gameManager.Border}px;";
     }
 }
