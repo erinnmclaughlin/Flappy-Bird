@@ -5,6 +5,7 @@ namespace FlappyBird.Web.Models
 {
     public class PipeModel : INotifyPropertyChanged
     {
+        private readonly int _gameWidth;
         private readonly int _groundHeight;
 
         private readonly int _width;
@@ -35,6 +36,7 @@ namespace FlappyBird.Web.Models
 
         public PipeModel(int gameWidth, int groundHeight)
         {
+            _gameWidth = gameWidth;
             _groundHeight = groundHeight;
             _distanceFromLeft = gameWidth;
             _distanceFromBottom = new Random().Next(1, 60);
@@ -49,12 +51,13 @@ namespace FlappyBird.Web.Models
             DistanceFromLeft -= speed;
         }
 
-        public bool IsCentered()
+        public bool IsCentered(int centerWidth)
         {
-            // half of the game width minus the width of the bird
-            var centerMin = 500 / 2 - 60;
+            // half of the game width minus the width of the pipe
+            var centerMin =  _gameWidth / 2 - _width;
+
             // half of the game width plus half the width of the bird
-            var centerMax = (500 + 60) / 2;
+            var centerMax = (_gameWidth + centerWidth) / 2;
 
             return (DistanceFromLeft > centerMin && DistanceFromLeft < centerMax);
         }

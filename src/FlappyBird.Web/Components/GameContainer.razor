@@ -24,6 +24,9 @@ else
 
 @code {
 
+    [Parameter]
+    public int GameWidth { get; set; } = 500;
+
     GameManager _gameManager { get; set; }
     string _gameCss;
     string _leftBorderCss;
@@ -33,7 +36,7 @@ else
 
     protected override void OnInitialized()
     {
-        _gameManager = new GameManager();
+        _gameManager = new GameManager(GameWidth);
         _gameManager.PropertyChanged += (o,e) => StateHasChanged();
         SetStyling();
     }

@@ -27,7 +27,7 @@ namespace FlappyBird.Web.Models
         public BirdModel Bird { get; private set; }
         public ObservableCollection<PipeModel> Pipes { get; private set; }
 
-        public GameManager(int gameWidth = 500)
+        public GameManager(int gameWidth)
         {
             _width = gameWidth;
             _height = (int)(gameWidth * 1.46);
@@ -77,7 +77,7 @@ namespace FlappyBird.Web.Models
 
         private void ManagePipes()
         {
-            if (!Pipes.Any() || Pipes.Last().IsCentered())
+            if (!Pipes.Any() || Pipes.Last().IsCentered(Bird.Width))
                 GeneratePipe();
 
             if (Pipes.First().IsOffScreen())
@@ -115,7 +115,7 @@ namespace FlappyBird.Web.Models
 
         private PipeModel GetCenteredPipe()
         {
-            return Pipes.FirstOrDefault(p => p.IsCentered());
+            return Pipes.FirstOrDefault(p => p.IsCentered(Bird.Width));
         }
 
     }
