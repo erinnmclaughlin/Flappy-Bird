@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,9 +19,16 @@ namespace FlappyBird.Web.Models
 
         public GameManager()
         {
-            Bird = new BirdModel();
-            Pipes = new ObservableCollection<PipeModel>();
-            Pipes.CollectionChanged += (o, e) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pipes)));
+            ResetGame();
+        }
+
+        public void StartGame()
+        {
+            if (!IsRunning)
+            {
+                ResetGame();
+                MainLoop();
+            }
         }
 
         public async void MainLoop()
@@ -41,18 +47,15 @@ namespace FlappyBird.Web.Models
 
         private void CheckForCollisions()
         {
-            if (Bird.DistanceFromBottom <= 0)
+            if (Bird.IsOnGround())
                 GameOver();
 
             var centeredPipe = GetCenteredPipe();
             if (centeredPipe != null)
             {
-                // pipe height - ground height + pipe distance from bottom
-                var min = 300 - 150 + centeredPipe.DistanceFromBottom;
-                // pipe gap - ground height + pipe distance from bottom - height of bird
-                var max = 430 - 150 + centeredPipe.DistanceFromBottom - 45;
 
-                if (Bird.DistanceFromBottom < min || Bird.DistanceFromBottom > max)
+                if (Bird.DistanceFromGround < centeredPipe.GapDistanceFromGroundMin || 
+                    Bird.DistanceFromGround > centeredPipe.GapDistanceFromGroundMax - 45)
                     GameOver();
             }
                 
@@ -60,10 +63,10 @@ namespace FlappyBird.Web.Models
 
         private void ManagePipes()
         {
-            if (!Pipes.Any() || Pipes.Last().DistanceFromLeft < 250)
+            if (!Pipes.Any() || Pipes.Last().IsCentered())
                 GeneratePipe();
 
-            if (Pipes.First().DistanceFromLeft < -60)
+            if (Pipes.First().IsOffScreen())
                 Pipes.Remove(Pipes.First());
         }
 
@@ -84,6 +87,13 @@ namespace FlappyBird.Web.Models
         private void GeneratePipe()
         {
             Pipes.Add(new PipeModel());
+        }
+
+        private void ResetGame()
+        {
+            Bird = new BirdModel();
+            Pipes = new ObservableCollection<PipeModel>();
+            Pipes.CollectionChanged += (o, e) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pipes)));
         }
 
         private PipeModel GetCenteredPipe()

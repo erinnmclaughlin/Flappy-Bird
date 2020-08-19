@@ -6,7 +6,7 @@
 @code {
 
     [Parameter] public PipeModel Model { get; set; }
-    string _topPipeCss => $"bottom: {Model.DistanceFromBottom + 430}px; left: {Model.DistanceFromLeft}px";
+    string _topPipeCss => $"bottom: {Model.DistanceFromBottom + Model.Gap + 300}px; left: {Model.DistanceFromLeft}px";
     string _bottomPipeCss => $"bottom: {Model.DistanceFromBottom}px; left: {Model.DistanceFromLeft}px";
 
     protected override void OnParametersSet()
