@@ -31,13 +31,13 @@ namespace FlappyBird.Web.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BirdModel(int gameWidth)
+        public BirdModel(int gameWidth, int gameHeight)
         {
-            _width = gameWidth * 3 / 25;
+            _width = gameHeight * 6 / 73;
             _height = _width * 3 / 4;
             _distanceFromLeft = (gameWidth - _width) / 2;
-            _distanceFromGround = gameWidth / 5;
-            _jumpStrength = gameWidth / 10;
+            _distanceFromGround = gameHeight * 10 / 73;
+            _jumpStrength = gameHeight * 5 / 73;
         }
 
         public void Fall(int gravity)

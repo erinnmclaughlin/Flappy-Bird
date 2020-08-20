@@ -15,14 +15,14 @@
 .sky {
     background-image: url(../images/fb-game-background.png);
     position: absolute;
-    background-size: 100%;
+    background-size: contain;
 }
 
 .ground {
     background-image: url(../images/bottom-background.png);
     position: absolute;
     z-index: +1;
-    background-size: 100%;
+    background-size: contain;
 }
 
 .bird {

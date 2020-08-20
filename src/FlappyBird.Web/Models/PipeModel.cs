@@ -34,16 +34,15 @@ namespace FlappyBird.Web.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public PipeModel(int gameWidth, int groundHeight)
+        public PipeModel(int gameWidth, int gameHeight, int groundHeight)
         {
             _gameWidth = gameWidth;
             _groundHeight = groundHeight;
             _distanceFromLeft = gameWidth;
-            _distanceFromBottom = new Random().Next(1, 60);
-            _gap = gameWidth * 13 / 50;
-
-            _width = gameWidth * 3 / 25;
-            _height = gameWidth * 3 / 5;
+            _distanceFromBottom = new Random().Next(1, gameHeight * 6 / 73);
+            _gap = gameHeight * 13 / 73;
+            _width = gameHeight * 6 / 73;
+            _height = gameHeight * 30 / 73;
         }
 
         public void Move(int speed)

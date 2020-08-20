@@ -8,8 +8,8 @@ namespace FlappyBird.Web.Models
 {
     public class GameManager : INotifyPropertyChanged
     {
-        private readonly int _gravity = 2;
-        private readonly int _speed = 2;
+        private readonly int _gravity;
+        private readonly int _speed;
 
         private readonly int _width;
         public int Width { get { return _width; } }
@@ -27,11 +27,18 @@ namespace FlappyBird.Web.Models
         public BirdModel Bird { get; private set; }
         public ObservableCollection<PipeModel> Pipes { get; private set; }
 
-        public GameManager(int gameWidth)
+        public GameManager(int gameWidth, int gameHeight)
         {
+            // Everything should be scaled wrt game height.
+            // Width will just create a repeating background area, but not affect the size of the components.
+
             _width = gameWidth;
-            _height = (int)(gameWidth * 1.46);
-            _border = (int)(gameWidth / 6.25);
+            _height = gameHeight;
+            _border = _height * 8 / 73;
+
+            _gravity = gameHeight * 2 / 730;
+            _speed = gameHeight * 2 / 730;
+
             ResetGame();
         }
 
@@ -77,7 +84,7 @@ namespace FlappyBird.Web.Models
 
         private void ManagePipes()
         {
-            if (!Pipes.Any() || Pipes.Last().IsCentered(Bird.Width))
+            if (!Pipes.Any() || Pipes.Last().DistanceFromLeft < Width - 250)
                 GeneratePipe();
 
             if (Pipes.First().IsOffScreen())
@@ -103,12 +110,12 @@ namespace FlappyBird.Web.Models
 
         private void GeneratePipe()
         {
-            Pipes.Add(new PipeModel(Width, GroundHeight));
+            Pipes.Add(new PipeModel(Width, Height, GroundHeight));
         }
 
         private void ResetGame()
         {
-            Bird = new BirdModel(_width);
+            Bird = new BirdModel(Width, Height);
             Pipes = new ObservableCollection<PipeModel>();
             Pipes.CollectionChanged += (o, e) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pipes)));
         }
