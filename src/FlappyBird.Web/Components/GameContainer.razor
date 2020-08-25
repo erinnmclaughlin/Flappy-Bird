@@ -7,7 +7,7 @@
 else
 {
     <div class="border-left"></div>
-    <div class="game-container" tabindex="0" @onclick="StartGame" @onkeyup="HandleKeyUp">
+    <div class="game-container" tabindex="0" @onclick="_gameManager.StartGame" @onkeyup="HandleKeyUp">
         <div class="border-top"></div>
         <div class="sky">
             <Bird Model="_gameManager.Bird" />
@@ -29,19 +29,14 @@ else
     protected override void OnInitialized()
     {
         _gameManager = new GameManager();
-        _gameManager.PropertyChanged += (o,e) => StateHasChanged();
-    }
-
-    void StartGame()
-    {
-        _gameManager.MainLoop();
+        _gameManager.MainLoopCompleted += (o,e) => StateHasChanged();
     }
 
     void HandleKeyUp(KeyboardEventArgs e)
     {
-        if (_gameManager.IsRunning && e.Key == " ")
+        if (e.Key == " ")
         {
-            _gameManager.Bird.Jump();
+            _gameManager.Jump();
         }
     }
 }

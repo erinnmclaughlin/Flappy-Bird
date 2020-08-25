@@ -1,28 +1,24 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlappyBird.Web.Models
 {
-    public class GameManager : INotifyPropertyChanged
+    public class GameManager
     {
         private readonly int _gravity = 2;
-        private readonly int _speed = 2;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler MainLoopCompleted;
 
         public bool IsRunning { get; private set; } = false;
 
         public BirdModel Bird { get; private set; }
-        public ObservableCollection<PipeModel> Pipes { get; private set; }
+        public List<PipeModel> Pipes { get; private set; }
 
         public GameManager()
         {
-            Bird = new BirdModel();
-            Pipes = new ObservableCollection<PipeModel>();
-            Pipes.CollectionChanged += (o, e) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Pipes)));
+            ResetGameObjects();
         }
 
         public async void MainLoop()
@@ -35,27 +31,39 @@ namespace FlappyBird.Web.Models
                 CheckForCollisions();            
                 ManagePipes();
 
+                MainLoopCompleted?.Invoke(this, EventArgs.Empty);
                 await Task.Delay(20);
             }
         }
 
+        public void Jump()
+        {
+            if (IsRunning) 
+                Bird.Jump();
+        }
+
+        public void StartGame()
+        {
+            if (!IsRunning)
+            {
+                ResetGameObjects();
+                MainLoop();
+            }           
+        }
+
         private void CheckForCollisions()
         {
-            if (Bird.DistanceFromBottom <= 0)
+            if (Bird.IsOnGround())
                 GameOver();
 
             var centeredPipe = GetCenteredPipe();
-            if (centeredPipe != null)
+            if (centeredPipe != null &&
+                (Bird.DistanceFromGround < centeredPipe.GapLower ||
+                Bird.DistanceFromGround > centeredPipe.GapUpper - 45)) // <-- minus bird height
             {
-                // pipe height - ground height + pipe distance from bottom
-                var min = 300 - 150 + centeredPipe.DistanceFromBottom;
-                // pipe gap - ground height + pipe distance from bottom - height of bird
-                var max = 430 - 150 + centeredPipe.DistanceFromBottom - 45;
-
-                if (Bird.DistanceFromBottom < min || Bird.DistanceFromBottom > max)
-                    GameOver();
+                GameOver();
             }
-                
+                                    
         }
 
         private void ManagePipes()
@@ -72,7 +80,7 @@ namespace FlappyBird.Web.Models
             Bird.Fall(_gravity);
             foreach (var pipe in Pipes)
             {
-                pipe.Move(_speed);
+                pipe.Move();
             }
         }
        
@@ -91,5 +99,10 @@ namespace FlappyBird.Web.Models
             return Pipes.FirstOrDefault(p => p.IsCentered());
         }
 
+        private void ResetGameObjects()
+        {
+            Bird = new BirdModel();
+            Pipes = new List<PipeModel>();
+        }
     }
 }
