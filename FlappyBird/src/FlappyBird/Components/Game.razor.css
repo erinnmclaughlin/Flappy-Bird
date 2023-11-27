@@ -1,0 +1,55 @@
+﻿#game {
+    margin: auto;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    max-height: 725px;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+    #game:focus {
+        outline: 5px solid black;
+    }
+
+#background, #ground {
+    image-rendering: pixelated;
+    width: 500px;
+    position: absolute;
+}
+
+#background {
+    top: 0;
+    height: 580px;
+    background-image: url('../assets/fb-game-background.png');
+}
+
+#ground {
+    top: 580px;
+    margin-top: -5px;
+    height: 150px;
+    background-image: url('../assets/bottom-background.png');
+}
+
+#ui {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+#playButton {
+    margin: auto;
+    font-size: 1.5rem;
+    font-weight: 800;
+    border: 0;
+    background: transparent;
+    transition: color ease-out 0.15s;
+    height: 100%;
+    width: 100%;
+}
+
+    #playButton:hover {
+        color: yellow;
+    }

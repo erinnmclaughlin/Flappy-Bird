@@ -1,0 +1,43 @@
+﻿@page "/"
+
+<PageTitle>Flappy Bird</PageTitle>
+
+<div @ref="_game" id="game" tabindex="-1" @onfocusout="Pause" @onkeydown="HandleKeyDown">
+    <div id="background"></div>
+    <div id="ground"></div>
+
+    @if (_isPaused)
+    {
+        <div id="ui">
+            <button id="playButton" @onclick="Play">Click to Start</button>
+        </div>
+    }
+</div>
+
+@code {
+    private ElementReference _game;
+    private bool _isPaused = true;
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (_isPaused)
+        {
+            await Play();
+            return;
+        }
+
+        if (e.Key == " ")
+            Console.WriteLine("jump");
+    }
+
+    private async Task Play()
+    {
+        await _game.FocusAsync();
+        _isPaused = false;
+    }
+
+    private void Pause()
+    {
+        _isPaused = true;
+    }
+}
