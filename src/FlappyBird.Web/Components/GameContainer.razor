@@ -1,4 +1,5 @@
 ﻿@using FlappyBird.Web.Models
+@using Microsoft.AspNetCore.Components.Web;
 
 @if (_gameManager == null)
 {
@@ -34,9 +35,15 @@ else
 
     void HandleKeyUp(KeyboardEventArgs e)
     {
-        if (e.Key == " ")
-        {
-            _gameManager.Jump();
-        }
+      string s= e.Key; // already a string no need ToString()
+      Console.WriteLine(s);
+      //ConsoleKey consoleKey = (ConsoleKey)Enum.Parse(typeof(ConsoleKey), s);
+
+      // if (e.Key == " ")
+      if(s == "ArrowUp" || s==" ")
+      {
+          _gameManager.Jump();
+      }
+
     }
 }
